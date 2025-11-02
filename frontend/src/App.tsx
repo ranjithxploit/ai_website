@@ -4,8 +4,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider, useAuth } from './context/AuthContext';
-
-// Pages
 import Landing from './pages/Landing';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -14,22 +12,18 @@ import TemplateUpload from './pages/TemplateUpload';
 import Generate from './pages/Generate';
 import History from './pages/History';
 import Profile from './pages/Profile';
-
-// Layout
 import Layout from './components/Layout';
 
-// Create React Query client
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
       retry: 1,
-      staleTime: 5 * 60 * 1000, // 5 minutes
+      staleTime: 5 * 60 * 1000,
     },
   },
 });
 
-// Protected Route Component
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isAuthenticated, isLoading } = useAuth();
 
@@ -51,12 +45,9 @@ const App: React.FC = () => {
         <AuthProvider>
           <div className="App">
             <Routes>
-              {/* Public Routes */}
               <Route path="/" element={<Landing />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-
-              {/* Protected Routes */}
               <Route
                 path="/dashboard"
                 element={
@@ -108,11 +99,8 @@ const App: React.FC = () => {
                 }
               />
 
-              {/* 404 */}
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
-
-            {/* Toast Notifications */}
             <Toaster
               position="top-right"
               toastOptions={{
